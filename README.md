@@ -6,27 +6,72 @@
 - 只用 Python 标准库（3.9+），无需 pip 安装任何东西，也**不引入 OCR 依赖**。
 - 平台：Windows 优先（路径、UTF-8、非法字符、保留名、260 字符限制都已处理），macOS/Linux 同样可用。
 
-## 安装位置
+## 安装
 
-Codex 从这两个目录发现 Skill，任选其一（推荐第一个）：
+Codex 从以下目录发现 Skill（任选其一，推荐第一个）：
 
+- `%USERPROFILE%\.codex\skills\obsidian-image-notes\`
+- `%USERPROFILE%\.agents\skills\obsidian-image-notes\`
+
+要求：目录里直接就是 `SKILL.md`（不要多套一层文件夹）。只需 Python 3.9+，无需 pip 安装任何依赖。
+
+### 方式一：git clone（推荐，后续可直接 git pull 更新）
+
+```powershell
+git clone https://github.com/liuchenwei285/obsidian-image-notes.git "$env:USERPROFILE\.codex\skills\obsidian-image-notes"
 ```
-%USERPROFILE%\.codex\skills\obsidian-image-notes\      <- 个人 Skill（推荐）
-%USERPROFILE%\.agents\skills\obsidian-image-notes\
+
+### 方式二：下载 ZIP 手动安装
+
+1. 在仓库页点 **Code → Download ZIP** 并解压；
+2. 把解压出来的 `obsidian-image-notes` 整个文件夹移动到上面任一目录；
+3. 确认该目录下直接就是 `SKILL.md`、`scripts\`、`references\`、`tests\`。
+
+### 方式三：在 Codex 会话里让我装
+
+把仓库地址发给 Codex，说「把这个 Skill 装到本机」：会自动 clone 到正确位置并跑一遍 `doctor` 自检。
+
+### 安装后初始化（一次性，必做）
+
+```powershell
+$s = "$env:USERPROFILE\.codex\skills\obsidian-image-notes\scripts\obsidian_image_notes.py"
+
+# 1) 生成你自己的配置：填 vault 路径，并把 vault 里已有的一级目录识别为课程
+python $s init-config --vault "D:\Notes\MyVault" --detect-courses
+
+# 2) 自检：配置、vault、.obsidian、课程列表、写权限
+python $s doctor
 ```
 
-把整个 `obsidian-image-notes` 文件夹放进去即可，装完重启一次 Codex。目录结构：
+`init-config` 会在 Skill 目录里生成 `config.json`；该文件已被 `.gitignore` 排除，不会把你的 vault 路径带进仓库。
+也可以不改文件，直接用环境变量指定 vault：
+
+```powershell
+[Environment]::SetEnvironmentVariable("OBSIDIAN_IMAGE_NOTES_VAULT", "D:\Notes\MyVault", "User")
+```
+
+装完**重启一次 Codex**，然后附图说「整理进我的 Obsidian」即可触发。
+
+### 更新到新版本
+
+```powershell
+cd "$env:USERPROFILE\.codex\skills\obsidian-image-notes"
+git pull
+python tests\test_obsidian_image_notes.py    # 可选：更新后跑一遍测试
+```
+
+### 目录结构
 
 ```
 obsidian-image-notes/
 ├── SKILL.md                     Skill 指令（工作流 + 安全规则 + 报告格式）
 ├── README.md                    本文件
-├── config.json                  你的实际配置（已按本机 vault 预填）
-├── config.example.json          配置模板
+├── config.example.json          配置模板（config.json 由 init-config 生成，不入库）
 ├── agents/openai.yaml           Codex UI 显示名与默认提示词
 ├── scripts/obsidian_image_notes.py   落盘脚本（唯一会写 vault 的东西）
 ├── references/transcription.md  转写与 LaTeX/Obsidian 渲染规范
 ├── references/config.md         配置字段、匹配算法、错误码、排查
+├── docs/TEST-REPORT.md          测试与验证报告
 └── tests/test_obsidian_image_notes.py  59 个真实测试用例
 ```
 
