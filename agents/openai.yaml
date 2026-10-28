@@ -1,0 +1,4 @@
+interface:
+  display_name: "Obsidian 图片笔记"
+  short_description: "识别笔记图片，按课程安全归档到 Obsidian"
+  default_prompt: "请用 Obsidian 图片笔记 Skill，把我附上的笔记图片整理成 Markdown 并自动保存到 Obsidian（按课程分类，不要覆盖已有笔记）。"

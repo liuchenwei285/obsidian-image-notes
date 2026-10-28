@@ -1,0 +1,11 @@
+# 个人配置（含你的 vault 路径），只存在于本地
+config.json
+config.local.json
+
+# Python
+__pycache__/
+*.py[cod]
+
+# 系统
+.DS_Store
+Thumbs.db

@@ -1,0 +1,74 @@
+{
+  "config_version": 1,
+  "_readme": "配置模板。复制为 config.json 后修改：1) vault_path 填 Obsidian 知识库根目录（里面有 .obsidian 文件夹）；2) courses 填你的课程。也可运行 scripts/obsidian_image_notes.py init-config --vault <路径> --detect-courses 自动生成。",
+  "vault_path": "CHANGE_ME  例如 D:\\Notes\\MyVault",
+  "require_obsidian_dir": true,
+  "strict_symlinks": true,
+  "notes_root": "",
+  "unknown_course_folder": "待分类",
+  "allow_new_course": true,
+  "attachments": {
+    "mode": "subfolder",
+    "subdir": "attachments",
+    "global_path": "Attachments"
+  },
+  "naming": {
+    "max_filename_len": 80,
+    "conflict_pattern": "{stem} ({n})",
+    "conflict_max_suffix": 999,
+    "attachment_naming": "original",
+    "max_total_path_len": 240
+  },
+  "classify": {
+    "enabled": true,
+    "min_keyword_score": 2,
+    "require_unique_winner": true,
+    "scan_chars": 6000
+  },
+  "dedupe": {
+    "scan_scope": "vault",
+    "max_scan_files": 20000,
+    "duplicate_image_policy": "skip",
+    "scan_notes_for_source": true
+  },
+  "embed": {
+    "mode": "auto",
+    "style": "short"
+  },
+  "frontmatter": {
+    "extra_tags": [
+      "图片笔记"
+    ],
+    "tag_prefix": "course/",
+    "add_h1_title": true
+  },
+  "courses": [
+    {
+      "name": "示例-高等数学",
+      "folder": "高数",
+      "aliases": [
+        "高数",
+        "微积分"
+      ],
+      "keywords": [
+        "极限",
+        "导数",
+        "积分",
+        "级数"
+      ]
+    },
+    {
+      "name": "示例-C语言",
+      "folder": "C语言",
+      "aliases": [
+        "C"
+      ],
+      "keywords": [
+        "printf",
+        "指针",
+        "结构体",
+        "malloc"
+      ]
+    }
+  ]
+}
